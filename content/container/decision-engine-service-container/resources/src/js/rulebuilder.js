@@ -151,7 +151,7 @@ exports.init = function () {
       suffix: '',
       allowDecimal: true,
       allowNegative: true,
-      decimalLimit: 4,
+      decimalLimit: 8,
     };
   }
   window.numberMaskTwo = numberMaskTwo;
