@@ -528,7 +528,10 @@ async function populateArtificialIntelligenceAndDataIntegrationSegment(req) {
         }, [])
         if (currentSegment.type === 'dataintegration') {
           if (currentSegment.inputs && currentSegment.inputs.length) {
-            variableIds.push(...currentSegment.inputs.map(input => input.input_variable));
+            variableIds.push(...currentSegment.inputs.reduce((acc, input) => {
+              if (input && input.input_type === 'variable' && input.input_variable) acc.push(input.input_variable);
+              return acc;
+            }, []));
           }
           if (currentSegment.outputs && currentSegment.outputs.length) {
             variableIds.push(...currentSegment.outputs.map(output => output.output_variable));
@@ -537,7 +540,10 @@ async function populateArtificialIntelligenceAndDataIntegrationSegment(req) {
 
         if (currentSegment.type === 'artificialintelligence') {
           if (currentSegment.inputs && currentSegment.inputs.length) {
-            variableIds.push(...currentSegment.inputs.map(input => input.system_variable_id));
+            variableIds.push(...currentSegment.inputs.reduce((acc, input) => {
+              if (input && input.input_type === 'variable' && input.input_variable) acc.push(input.input_variable);
+              return acc;
+            }, []));
           }
           if (currentSegment.outputs && currentSegment.outputs.length) {
             variableIds.push(...currentSegment.outputs.map(output => output.output_variable));
